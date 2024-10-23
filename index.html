@@ -55,7 +55,7 @@
                 const response = await fetch('https://bio-humans-vs-bacteria-tutor-nealaddicott.replit.app/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message, file_content: fileContent, thread_id: threadId })
+                    body: JSON.stringify({ message, file_content: fileContent, thread_id: threadID })
                 });
     
                 const data = await response.json();
