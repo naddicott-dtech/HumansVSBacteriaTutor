@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+    <button id="newConversationButton">New Conversation</button>
     <h1>Chat with the Humans VS Bacteria Assistant</h1>
     <div id="chat"></div>
     <div id="inputArea">
@@ -26,9 +27,17 @@
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
         const fileInput = document.getElementById('fileInput');
+        const newConversationButton = document.getElementById('newConversationButton');
 
         let threadID = null; // Store the thread ID for the current convfersation
 
+        newConversationButton.addEventListener('click' () => {
+            threadID = null; // Reset the thread ID
+            chatDiv.innterHTML = ''; // Clear the chat history
+            messageInput.value = ''; // Clear the message input
+            fileInput.value = ''; // Clear the file input
+        });
+        
         sendButton.addEventListener('click', async () => {
             const message = messageInput.value.trim();
             if (!message) return;
@@ -47,6 +56,7 @@
                 fileContent = await file.text();
                 } catch (error) {
                     console.error('Error reading file:', error);
+                    const errorMessageDiv = document.createElement('div'); // Declare the variable
                     errorMessageDiv.className = 'message assistant';
                     errorMessageDiv.textContent = 'Error: Could not read the provided file.';
                     chatDiv.appendChild(errorMessageDiv);
