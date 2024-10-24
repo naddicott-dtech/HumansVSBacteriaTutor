@@ -31,9 +31,9 @@
 
         let threadID = null; // Store the thread ID for the current convfersation
 
-        newConversationButton.addEventListener('click' () => {
+        newConversationButton.addEventListener('click', () => {
             threadID = null; // Reset the thread ID
-            chatDiv.innterHTML = ''; // Clear the chat history
+            chatDiv.innerHTML = ''; // Clear the chat history
             messageInput.value = ''; // Clear the message input
             fileInput.value = ''; // Clear the file input
         });
