@@ -22,14 +22,14 @@
     <div class="g_id_signin" data-type="standard"></div>
 
     <div id="chatInterface" style="display: none;">
-    <button id="newConversationButton">New Conversation</button>
-    <h1>Chat with the Humans VS Bacteria Assistant</h1>
-    <div id="chat"></div>
-    <div id="inputArea">
-        <textarea id="messageInput" rows="4" cols="50" placeholder="Type your message here"></textarea><br><br>
-        <input type="file" id="fileInput"><br><br>
-        <button id="sendButton">Send</button>
-    </div>
+        <button id="newConversationButton">New Conversation</button>
+        <h1>Chat with the Humans VS Bacteria Assistant</h1>
+        <div id="chat"></div>
+        <div id="inputArea">
+            <textarea id="messageInput" rows="4" cols="50" placeholder="Type your message here"></textarea><br><br>
+            <input type="file" id="fileInput"><br><br>
+            <button id="sendButton">Send</button>
+        </div>
     </div>
     
     <script>
@@ -44,6 +44,9 @@
         let idToken = '';
         
         function handleCredentialResponse(response) {
+            console.log('handleCredentialResponse called');
+            console.log('ID Token received:', response.credential); // Log the ID token to verify it's being received
+    
             idToken = response.credential;
         
             // Send the ID token to your backend for verification
@@ -52,22 +55,28 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id_token: idToken })
             })
-            .then(res => res.json())
+            .then(res => {
+                console.log('Response status:', res.status); // Log the response status
+                return res.json();
+            })
             .then(data => {
+                console.log('Data received from backend:', data); // Log the full response data to verify structure and content
                 if (data.success) {
+                    console.log('Authentication successful, calling showChatInterface');
                     // User is authenticated
                     showChatInterface();
                 } else {
-                    // Authentication failed
+                    console.warn('Authentication failed:', data); // Warn if authentication failed
                     alert('Authentication failed');
                 }
             })
             .catch(error => {
-                console.error('Error verifying token:', error);
+                console.error('Error verifying token:', error); // Catch any fetch or network errors
             });
         }
 
         function showChatInterface() {
+            console.log('showChatInterface called');
             document.getElementById('chatInterface').style.display = 'block';
             document.getElementById('g_id_onload').style.display = 'none';
             document.querySelector('.g_id_signin').style.display = 'none';
